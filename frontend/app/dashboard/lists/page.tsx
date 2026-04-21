@@ -319,7 +319,7 @@ export default function ListsPage() {
             <textarea
               className={`${inputClass} mb-3 min-h-[10rem] resize-y font-mono text-xs`}
               rows={8}
-              placeholder={"ООО Ромашка | a_at_domain\nТСЖ Пример | b_at_domain"}
+              placeholder={"Organization A | contact_a_at_domain\nOrganization B | contact_b_at_domain"}
               value={bulkEmails}
               onChange={(e) => setBulkEmails(e.target.value)}
             />
