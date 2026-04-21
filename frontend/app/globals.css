@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Базовые правила поверх Tailwind (Next.js / App Router) */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+}

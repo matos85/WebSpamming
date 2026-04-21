@@ -1,0 +1,21 @@
+# Secrets — never commit
+secrets/*.env
+!secrets/*.env.example
+
+# Python
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.venv/
+*.py[cod]
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# IDE / OS
+.idea/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db

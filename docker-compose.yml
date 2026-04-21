@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    env_file:
+      - ./secrets/postgres.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U webspam -d webspam"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    env_file:
+      - ./secrets/backend.env
+    environment:
+      DEFAULT_MAILING_SOURCE_DIR: /data/default-email
+    volumes:
+      - "./data/default-email:/data/default-email:ro"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      API_INTERNAL_URL: http://backend:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

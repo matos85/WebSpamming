@@ -1,0 +1,11 @@
+---
+description: Запуск WebSpamming только через Docker Desktop / docker compose
+alwaysApply: true
+---
+
+# Запуск проекта
+
+- Поднимать и останавливать **только** через Docker: из корня репозитория `docker compose up -d --build` и `docker compose down`.
+- Не предлагать и не использовать локальный `npm run dev`, `uvicorn` на хосте или отдельный Postgres на Windows для повседневного запуска — исключение только если пользователь явно просит отладку без Docker.
+- После изменений кода пересобирать образы: `docker compose up -d --build`.
+- Секреты — в `secrets/*.env` (не в git). Инструкции — в `RUNBOOK.txt`.

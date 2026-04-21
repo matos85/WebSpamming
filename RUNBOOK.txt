@@ -1,0 +1,41 @@
+WebSpamming — запуск
+====================
+
+Обычный запуск только через Docker Desktop из корня проекта:
+  docker compose up -d --build
+Остановка:
+  docker compose down
+
+Путь к проекту на Windows не должен содержать символ «!» (например D:\!MyProject\…):
+локальный «npm run build» тогда падает из‑за Webpack. Сборка в Docker не страдает.
+
+Сборка backend в Docker использует зеркало PyPI Tsinghua по умолчанию (см. backend/Dockerfile).
+Только pypi.org: docker compose build --build-arg PIP_INDEX=https://pypi.org/simple backend
+
+1) Секреты (один раз)
+   powershell -ExecutionPolicy Bypass -File .\scripts\init-secrets.ps1
+   Заполните secrets\postgres.env и secrets\backend.env (SMTP, JWT_SECRET, пароль БД).
+   Убедитесь, что пароль в DATABASE_URL в backend.env совпадает с POSTGRES_PASSWORD.
+
+2) Вся среда в Docker Desktop
+   docker compose build
+   docker compose up -d
+   Сайт: http://<IP_ВМ>:3000  API (напрямую): http://<IP_ВМ>:8000/docs
+   Первый вход: BOOTSTRAP_ADMIN_* из backend.env.
+
+3) Разработка с доступом с другого ПК в LAN
+   a) Поднять только Postgres:
+      docker compose up -d db
+   b) backend (из папки backend, с venv и установленными зависимостями):
+      задайте переменные из secrets\backend.env; DATABASE_URL с host localhost
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+   c) frontend:
+      скопируйте frontend\env.local.example -> frontend\.env.local
+      в .env.local укажите API_INTERNAL_URL=http://127.0.0.1:8000
+      npm install && npm run dev
+      Откройте с другого компьютера: http://<LAN_IP_этой_машины>:3000
+      На ПК с Windows при необходимости разрешите входящие для портов 3000 и 8000 в брандмауэре.
+
+4) CORS
+   Для произвольных origin в LAN установите в backend.env: CORS_ALLOW_ALL=true
+   (только для разработки; в проде задайте CORS_ALLOW_ALL=false и список CORS_ORIGINS).
