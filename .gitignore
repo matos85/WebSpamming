@@ -1,17 +1,37 @@
 # Secrets — never commit
 secrets/*.env
 !secrets/*.env.example
+.env
+.env.*
+!.env.example
+frontend/.env.local
+frontend/.env.*.local
+backend/.env
+backend/.env.*
 
 # Python
 backend/__pycache__/
 backend/**/__pycache__/
 backend/.venv/
 *.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
 
 # Node
 frontend/node_modules/
 frontend/.next/
 frontend/out/
+frontend/.turbo/
+frontend/coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # IDE / OS
 .idea/
@@ -19,3 +39,18 @@ frontend/out/
 *.log
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Build / archives / temp
+dist/
+build/
+tmp/
+temp/
+*.zip
+*.tar
+*.gz
+
+# Cursor local state (keep shared rules)
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
