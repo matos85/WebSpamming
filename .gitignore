@@ -50,7 +50,8 @@ temp/
 *.tar
 *.gz
 
-# Cursor local state (keep shared rules)
-.cursor/*
-!.cursor/rules/
-!.cursor/rules/**
+# Local AI/IDE metadata
+.cursor/
+agent-transcripts/
+canvases/
+mcps/
